@@ -1,0 +1,1 @@
+{"jobID":"853243a9-3a18-bb49-13d1-2bdb3aeebac9","spec":{"type":"policy","cause":{"Message":"","User":"Alvaro Rodriguez \u003calvarorl@gmail.com\u003e"},"spec":{"dev:deployment/podinfo":{"add":{"automated":"true"},"remove":null}}},"result":null}
