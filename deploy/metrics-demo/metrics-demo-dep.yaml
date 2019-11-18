@@ -1,0 +1,45 @@
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: metrics-demo
+  namespace: dev
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: metrics-demo
+  template:
+    metadata:
+      labels:
+        app: metrics-demo
+      annotations:
+        prometheus.io/scrape: 'true'
+    spec:
+      containers:
+      - name: metrics-demod
+        image: quay.io/brice/metrics-demo:latest
+        command:
+        - ./metrics-demo
+        - --port=9899
+        ports:
+        - containerPort: 9899
+        readinessProbe:
+          httpGet:
+            path: /readyz
+            port: 9899
+          initialDelaySeconds: 1
+          periodSeconds: 5
+          failureThreshold: 1
+        livenessProbe:
+          httpGet:
+            path: /healthz
+            port: 9899
+          initialDelaySeconds: 1
+          periodSeconds: 10
+          failureThreshold: 2
+        resources:
+          requests:
+            memory: "32Mi"
+            cpu: "10m"
+
